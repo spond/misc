@@ -1,1 +1,3 @@
-# misc
+# Miscellanous
+
+Odds and ends
