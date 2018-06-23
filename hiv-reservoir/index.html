@@ -233,7 +233,7 @@ function hellinger_distance (d1, d2) {
 function _run_sim (half_life, duration, sampling_times, samples) {
 
 
-    var c              = Math.log (2) / (half_life*4);
+    var c              = Math.log (2) / (half_life);
     var sampling_error = 3*4;
 
     var draw_from_discrete = function (weights) {
