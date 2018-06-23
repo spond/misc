@@ -235,7 +235,7 @@ function _run_sim (half_life, duration, sampling_times, samples) {
 
 
     var c              = Math.log (2) / (half_life);
-    var sampling_error = 3*4;
+    var sampling_error = 6*4;
 
     var draw_from_discrete = function (weights) {
         var norm = weights.reduce (function (s, v) {return s + v;}, 0);
