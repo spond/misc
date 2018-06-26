@@ -494,20 +494,20 @@ function plot_samples (id, sample_data, colorizer, actual) {
           .attr  ("cx", function(d) { return jitter (x(d[0]))[0]; })
           .attr  ("cy", function(d) { return y(d[1]); })
           .style ("fill", function (d) {return colorizer (d[0]);})
-          .style ("opacity", 0.25);
+          .style ("opacity", 0.5);
 
 
        svg.selectAll("dot")
           .data(flattened_actual)
         .enter().append("path")
-          .attr  ("d", d3.symbol().type(d3.symbolCross).size (200))
+          .attr  ("d", d3.symbol().type(d3.symbolCross).size (100))
           .attr("transform", function (d) {
 
                 var t = "translate(" + x(d[0]) + " ," +
                            y(d[1]) + ")";
                 return t;
                 })
-          .style ("fill", function (d) {return colorizer (d[0]);})
+          .style ("fill", "#DDD" /*function (d) {return colorizer (d[0]);}*/)
           .style ("stroke", "black")
           .style ("stroke-width", "1");
 
