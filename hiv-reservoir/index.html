@@ -9,7 +9,7 @@
 
 .arc text {
   font: 14px sans-serif;
-  fill: #fff;
+  fill: #000;
   text-anchor: middle;
 }
 
@@ -275,7 +275,7 @@ function _make_counts (raw_sample, duration) {
 
     return binned_data.map (function (v) {
         return {
-            label : v[0],
+            label : v[0]-duration,
             value : v[1],
             color : v[0]/duration
         };
@@ -286,10 +286,16 @@ function _make_data (half_life, time_span, sample_times, sequences_sampled, repl
     var inverse = {};
     var hellinger_d = [];
 
+    var min_date = 1e10;
+
     var replicated_data = sample_times.map (function (v, i) {
         inverse[v] = i;
-        return [v, Array (replicates).fill (0)];}
+        min_date = min_date >= v ? v : min_date;
+        return [v-time_span, Array (replicates).fill (0)];}
     );
+    
+    
+    
 
     var binned_data = {};
     for (var i = 0; i < replicates; i++) {
@@ -314,9 +320,10 @@ function _make_data (half_life, time_span, sample_times, sequences_sampled, repl
     }
 
     data = [];
+    
 
     for (var v in binned_data) {
-        data.push ({label : v, value : binned_data[v], color : v/time_span});
+        data.push ({label : v-time_span, value : binned_data[v], color : (v-min_date)/(time_span-min_date)});
     }
 
 
@@ -328,7 +335,7 @@ function _make_data (half_life, time_span, sample_times, sequences_sampled, repl
 }
 
 
-var color =  d3.interpolateYlOrRd;
+var color =  d3.interpolateRgbBasis(["#ff0000","#ff3300","#ff6633","#ff9900","#ffcc00","#ffff00","#99ff00","#33ff00","#00ff99","#00ffcc","#00ccff","#0099ff","#0033ff"]); //d3.interpolateYlOrRd;
 
 
 
@@ -365,16 +372,18 @@ function run_batch (duration, minimizer_halflife, default_halflife, available_sa
         actual_samples);
 
 
+    var min_time = available_sample_times_weeks.reduce (function (c, v) {return c < v[0] ? c : v[0];}, 1e10);
+
     plot_pie ("#actual-pie", _make_counts(available_sample_times_weeks, duration));
 
     plot_pie ("#sim-pie", data_default.total);
-    plot_samples ("#sim-dots", data_default.samples, function (x) {return color ( x / duration);}, actual_samples);
+    plot_samples ("#sim-dots", data_default.samples, function (x) {return color ( (x+duration-min_time) / (duration-min_time));}, actual_samples);
 
     var data_short = _make_data (minimizer_halflife, duration, available_sample_times_weeks.map (function (v) {return v[0]}), sequence_samples, 100, 
         actual_samples);
 
     plot_pie     ("#sim-pie-short", data_short.total);
-    plot_samples ("#sim-dots-short", data_short.samples, function (x) {return color ( x / duration);}, actual_samples);
+    plot_samples ("#sim-dots-short", data_short.samples, function (x) {return color ( (x+duration-min_time) / (duration-min_time));}, actual_samples);
 }
     
 
