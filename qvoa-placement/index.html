@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link href="//veg.github.io/phylotree.js/phylotree.css" rel="stylesheet">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="//code.jquery.com/jquery.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="//d3js.org/d3.v3.min.js"></script>
+  <script src="http://phylotree.hyphy.org/phylotree.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <style>
+#code {
+  display: inline-block;
+  width: 700px;
+  padding-left: 50px;
+}
+  </style>
+</head>
+</head>
+
+<body>
+  <div>
+    <form>
+      <label>Radial layout</label>
+      <input type="checkbox" id="layout" checked/>
+    </form>
+  </div>
+
+
+  <svg id="tree_display"></svg>
+
+<script>
+
+    var color = d3.scale.linear().domain([0,1/12,2/12,3/12,4/12,5/12,6/12,7/12,8/12,9/12,10/12,11/12,1]).range (["#ff0000","#ff3300","#ff6633","#ff9900","#ffcc00","#ffff00","#99ff00","#33ff00","#00ff99","#00ffcc","#00ccff","#0099ff","#0033ff"].map (function (c) {return d3.rgb (c);})).interpolate(d3.interpolateRgb);
+
+    var height = 1200, width = 1200;
+
+    d3.text("data/188-c2v3-2.fa_combined.tre", function(error, newick) {
+      var tree = d3.layout.phylotree()
+        .svg(d3.select("#tree_display"))
+        .options({
+        'left-right-spacing': 'fit-to-size',
+        // fit to given size top-to-bottom
+        'top-bottom-spacing': 'fit-to-size',
+        // fit to given size left-to-right
+        'selectable': false,
+        // make nodes and branches not selectable
+        'collapsible': false,
+        // turn off the menu on internal nodes
+        'transitions': false,
+        'annular-limit' : 0.05,
+        'draw-size-bubbles' : true
+        // turn off d3 animations
+      })
+      .size([height, width])
+      .node_circle_size(0)
+      .radial (true);
+
+
+
+      tree(d3.layout.newick_parser(newick));
+
+      var wpi_values = [];
+
+      tree.traverse_and_compute (function (n) {
+
+        function update_parent (n, wpi) {
+            if ("wpi" in n.parent) {
+                if (wpi >= 0) {
+                    if (wpi != n.parent.wpi) {
+                        n.parent.wpi = -1;
+                    }
+                } else {
+                    n.parent.wpi = -1;
+                }
+            } else {
+                n.parent.wpi = wpi >= 0 ? wpi : -1;
+            }
+        }
+
+        if (d3.layout.phylotree.is_leafnode (n)) {
+         var regular_leaf = n.name.match ("([0-9]+)wpi");
+         n.is_qvoa = regular_leaf ? false : true;
+
+         if (regular_leaf) {
+            n.wpi = + regular_leaf[1];
+            wpi_values.push (n.wpi);
+            update_parent (n, n.wpi);
+         }
+        } else {
+            if (n.parent) {
+                update_parent (n, n.wpi);
+            }
+        }
+
+
+
+      });
+
+      tree.node_span (function (n) {
+        if (n.is_qvoa) {
+            console.log ("QVOA");
+            return 10;
+        }
+        return 0;
+      });
+
+      wpi_values = d3.extent (wpi_values);
+
+      tree.style_edges (function (e, n) {
+        if ("wpi" in n.target) {
+            //console.log (n.target);
+            if (n.target.is_qvoa) {
+
+            } else {
+                if (n.target.wpi >= 0) {
+                     e.style ("stroke", color ((n.target.wpi - wpi_values[0])/(wpi_values[1] - wpi_values[0])));
+                } else {
+                     e.style ("opacity", "0.5");
+                }
+            }
+        } else {
+            /*if (n.target.is_qvoa) {
+                 e.style ("stroke-width", "10px");
+            }*/
+        }
+      });
+
+
+
+      tree.branch_name (function () {return null;});
+
+      tree.layout();
+
+      $("#layout").on("click", function(e) {
+        tree.radial($(this).prop("checked")).placenodes().update();
+      });
+    });
+
+    // for syntax highlighting
+    hljs.initHighlightingOnLoad();
+  </script>
+
+</body>
+
+</html>
