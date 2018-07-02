@@ -40,15 +40,15 @@
 
     var color = d3.scale.linear().domain([0,1/12,2/12,3/12,4/12,5/12,6/12,7/12,8/12,9/12,10/12,11/12,1]).range (["#ff0000","#ff3300","#ff6633","#ff9900","#ffcc00","#ffff00","#99ff00","#33ff00","#00ff99","#00ffcc","#00ccff","#0099ff","#0033ff"].map (function (c) {return d3.rgb (c);})).interpolate(d3.interpolateRgb);
 
-    var height = 1200, width = 1200;
+    var height = 1600, width = 1600;
 
     d3.text("data/188-c2v3-2.fa_combined.tre", function(error, newick) {
       var tree = d3.layout.phylotree()
         .svg(d3.select("#tree_display"))
         .options({
-        'left-right-spacing': 'fit-to-size',
+        //'left-right-spacing': 'fit-to-size',
         // fit to given size top-to-bottom
-        'top-bottom-spacing': 'fit-to-size',
+        //'top-bottom-spacing': 'fit-to-size',
         // fit to given size left-to-right
         'selectable': false,
         // make nodes and branches not selectable
@@ -106,10 +106,10 @@
 
       tree.node_span (function (n) {
         if (n.is_qvoa) {
-            console.log ("QVOA");
-            return 10;
+            //console.log ("QVOA");
+            return 1;
         }
-        return 0;
+        return 0.01;
       });
 
       wpi_values = d3.extent (wpi_values);
@@ -135,7 +135,7 @@
 
 
 
-      tree.branch_name (function () {return null;});
+      tree.branch_name (function () {return "";});
 
       tree.layout();
 
@@ -144,8 +144,6 @@
       });
     });
 
-    // for syntax highlighting
-    hljs.initHighlightingOnLoad();
   </script>
 
 </body>
