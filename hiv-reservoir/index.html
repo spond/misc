@@ -2,7 +2,7 @@
 
 <meta charset="utf-8">
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
     integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 <style>
 
@@ -16,10 +16,12 @@
 .axis-text {
   font: 14px sans-serif;
   fill: #000;
+
 }
 
 .arc path {
-  stroke: #fff;
+  stroke: #000;
+  stroke-width: 0.5px;
 }
 
 .line {
@@ -41,7 +43,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-          
+
             <a class="nav-link" data-toggle="modal" data-target="#simulation_settings">Configure</a>
           </li>
           <!--
@@ -63,9 +65,9 @@
         </form>
       </div>
  </nav>
-    
+
  <main role="main" class="container">
- 
+
      <div class="modal fade" id="simulation_settings" tabindex="-1" role="dialog" aria-labelledby="simulation_settings_label" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -95,38 +97,38 @@
             <div class="form-group">
                 <label for="sample-info">Sample information</label>
                 <textarea class="form-control" id="sample-info" rows="10">
- Sample,Count 
- 58,0 
- 60,0 
- 61,0 
- 63,0 
- 65,0 
- 67,0 
- 74,0 
- 78,0 
- 81,0 
- 85,0 
- 93,0 
- 97,0 
- 101,0 
- 105,0 
- 118,0 
- 131,0 
- 158,2 
- 173,0 
- 186,0 
- 200,1 
- 212,0 
- 225,0 
- 242,4 
- 252,0 
- 291,36 
+ Sample,Count
+ 58,0
+ 60,0
+ 61,0
+ 63,0
+ 65,0
+ 67,0
+ 74,0
+ 78,0
+ 81,0
+ 85,0
+ 93,0
+ 97,0
+ 101,0
+ 105,0
+ 118,0
+ 131,0
+ 158,2
+ 173,0
+ 186,0
+ 200,1
+ 212,0
+ 225,0
+ 242,4
+ 252,0
+ 291,36
                 </textarea>
                 <small id="sample-info-help" class="form-text text-muted">
                 A .csv field for RNA sampling time and the number of QVOA reads mapped to each timepoint as two columns: <b>Sample</b> (weeks post - infection) and <b>Count</b> (how many QVOA mapped to this timepoint, fractions for ambiguous assignment are OK)
                 </small>
              </div>
-          </form>         
+          </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -135,7 +137,7 @@
         </div>
       </div>
     </div>
-    
+
      <div class="row">
         <div class="col">
             <svg id = "sim-pie" width="300" height="300"></svg>
@@ -155,7 +157,7 @@
         </div>
         <div class="col justify-content-center">
             <p class="text-center">
-            Simulated reservoir proportions at t<sub>1/2</sub> = <span data-half-life = "2"> XX </span> weeks         
+            Simulated reservoir proportions at t<sub>1/2</sub> = <span data-half-life = "2"> XX </span> weeks
             </p>
         </div>
          <div class="col justify-content-center">
@@ -171,18 +173,18 @@
         <div class="col-lg">
             <svg id = "sim-dots-short" width="500" height="300"></svg>
         </div>
-      </div>  
+      </div>
      <div class="row ">
         <div class="col justify-content-center">
             <p class="text-center">
             Distribution of samples over 100 replicates (t<sub>1/2</sub> =  <span data-half-life = "1"> XX </span> weeks).
-            Crosses = actual samples.    
+            Crosses = actual samples.
             </p>
         </div>
          <div class="col justify-content-center">
             <p class="text-center">
-            Distribution of samples over 100 replicates (t<sub>1/2</sub> =  <span data-half-life = "2"> XX </span> weeks).      
-            Crosses = actual samples.    
+            Distribution of samples over 100 replicates (t<sub>1/2</sub> =  <span data-half-life = "2"> XX </span> weeks).
+            Crosses = actual samples.
             </p>
         </div>
      </div>
@@ -194,7 +196,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script></head>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 
-    
+
 <script>
 
 'use strict';
@@ -217,18 +219,18 @@ $("#rerun").on ("click", function (e) {
 
 function hellinger_distance (d1, d2) {
     // https://en.wikipedia.org/wiki/Hellinger_distance
-    
+
     var norm1 = d3.sum (d1),
         norm2 = d3.sum (d2);
-            
+
     var d = 0;
     d1.forEach (function (v, i) {
         d += (Math.sqrt (v/norm1) - Math.sqrt (d2[i]/norm2))**2;
-    }); 
-    
+    });
+
     var d =  Math.sqrt (d) / Math.sqrt (2);
     return d;
-    
+
 }
 
 function _run_sim (half_life, duration, sampling_times, samples) {
@@ -287,20 +289,22 @@ function _make_data (half_life, time_span, sample_times, sequences_sampled, repl
     var hellinger_d = [];
 
     var min_date = 1e10;
+    var max_date = 0;
 
     var replicated_data = sample_times.map (function (v, i) {
         inverse[v] = i;
         min_date = min_date >= v ? v : min_date;
+        max_date = max_date <= v ? v : max_date;
         return [v-time_span, Array (replicates).fill (0)];}
     );
-    
-    
-    
+
+
+
 
     var binned_data = {};
     for (var i = 0; i < replicates; i++) {
        var data = _run_sim (half_life, time_span, sample_times, sequences_sampled);
-       
+
        if (actual) {
             var mapped_data = sample_times.map (function (v) {
                 return 0;
@@ -308,10 +312,10 @@ function _make_data (half_life, time_span, sample_times, sequences_sampled, repl
             data.forEach (function (v) {
                 mapped_data [inverse[v]] += 1;
             });
-            
+
             hellinger_d.push (hellinger_distance (mapped_data, actual))
        }
-       
+
        data.forEach (function (v) {
          replicated_data[inverse[v]][1][i] ++;
          binned_data [v] = (binned_data[v] || 0) + 1;
@@ -320,10 +324,10 @@ function _make_data (half_life, time_span, sample_times, sequences_sampled, repl
     }
 
     data = [];
-    
+
 
     for (var v in binned_data) {
-        data.push ({label : v-time_span, value : binned_data[v], color : (v-min_date)/(time_span-min_date)});
+        data.push ({label : v-time_span, value : binned_data[v], color : (v-min_date)/(max_date-min_date)});
     }
 
 
@@ -342,50 +346,51 @@ var color =  d3.interpolateRgbBasis(["#ff0000","#ff3300","#ff6633","#ff9900","#f
 
 var minimize_hellinger = Infinity,
     minimizer_halflife = 2,
-    default_halflife = 44, 
+    default_halflife = 44,
     duration = 300;
-    
-   
-       
 
-       
-    
+
+
+
+
+
 function run_batch (duration, minimizer_halflife, default_halflife, available_sample_times_weeks) {
 
-    
+
     available_sample_times_weeks = available_sample_times_weeks.filter (function (v) {return v.length == 2 && !isNaN (+v[0]) && !isNaN (+v[1]);}).map (function (v) {
         return [+v[0], +v[1]];
     });
-    
+
     var actual_samples = available_sample_times_weeks.map (function (v) {return v[1]});
 
     /*
     for (k = 5; k > 0; k -= 0.05) {
-        var data = _make_data (k, duration, available_sample_times_weeks.map (function (v) {return v[0]}), sequence_samples, 100, 
+        var data = _make_data (k, duration, available_sample_times_weeks.map (function (v) {return v[0]}), sequence_samples, 100,
         actual_samples);
         console.log (d3.median (data.hellinger));
     }
     */
     var sequence_samples   = available_sample_times_weeks.reduce (function (p, c) {return p + c[1];}, 0);
 
-    var data_default = _make_data (default_halflife, duration, available_sample_times_weeks.map (function (v) {return v[0]}), sequence_samples, 100, 
+    var data_default = _make_data (default_halflife, duration, available_sample_times_weeks.map (function (v) {return v[0]}), sequence_samples, 100,
         actual_samples);
 
 
     var min_time = available_sample_times_weeks.reduce (function (c, v) {return c < v[0] ? c : v[0];}, 1e10);
+    var max_time = available_sample_times_weeks.reduce (function (c, v) {return c > v[0] ? c : v[0];}, 0);
 
     plot_pie ("#actual-pie", _make_counts(available_sample_times_weeks, duration));
 
     plot_pie ("#sim-pie", data_default.total);
-    plot_samples ("#sim-dots", data_default.samples, function (x) {return color ( (x+duration-min_time) / (duration-min_time));}, actual_samples);
+    plot_samples ("#sim-dots", data_default.samples, function (x) {return color ( (x+max_time-min_time) / (max_time-min_time));}, actual_samples);
 
-    var data_short = _make_data (minimizer_halflife, duration, available_sample_times_weeks.map (function (v) {return v[0]}), sequence_samples, 100, 
+    var data_short = _make_data (minimizer_halflife, duration, available_sample_times_weeks.map (function (v) {return v[0]}), sequence_samples, 100,
         actual_samples);
 
     plot_pie     ("#sim-pie-short", data_short.total);
     plot_samples ("#sim-dots-short", data_short.samples, function (x) {return color ( (x+duration-min_time) / (duration-min_time));}, actual_samples);
 }
-    
+
 
 
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -396,22 +401,23 @@ function plot_pie (element, pie_data) {
         width = +svg.attr("width"),
         height = +svg.attr("height"),
         radius = Math.min(width, height) / 2;
-        
-        
+
+
     svg.selectAll ("*").remove();
     var g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
     var pie = d3.pie()
         .sort(null)
+        .padAngle (0.04)
         .value(function(d) { return d.value; });
 
     var path = d3.arc()
-        .outerRadius(radius - 10)
-        .innerRadius(0);
+        .outerRadius(radius - 40)
+        .innerRadius(50);
 
     var label = d3.arc()
-        .outerRadius(radius - 40)
-        .innerRadius(radius - 40);
+        .outerRadius(radius-20)
+        .innerRadius(radius-20);
 
 
     var arc = g.selectAll(".arc")
@@ -425,7 +431,7 @@ function plot_pie (element, pie_data) {
 
     arc.append("text")
       .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
-      .attr("dy", "0.35em")
+      //.attr("dy", "0.4em")
       .text(function(d) { return d.data.label; });
 }
 
@@ -537,7 +543,7 @@ function plot_samples (id, sample_data, colorizer, actual) {
       // Add the Y Axis
       svg.append("g")
           .call(d3.axisLeft(y));
-          
+
 
 }
 
@@ -545,14 +551,14 @@ function apply_settings () {
 
     var hlf1 = +$("#half-life-1").val(),
         hlf2 = +$("#half-life-2").val();
-    
+
     d3.selectAll ('[data-half-life="1"]').text (hlf1);
     d3.selectAll ('[data-half-life="2"]').text (hlf2);
 
-    run_batch (+$("#infection-duration").val(), 
-           hlf2, 
-           hlf1, 
-           d3.csvParseRows($("#sample-info").val())); 
+    run_batch (+$("#infection-duration").val(),
+           hlf2,
+           hlf1,
+           d3.csvParseRows($("#sample-info").val()));
 }
 
 $( document ).ready(function() {
