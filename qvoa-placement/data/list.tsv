@@ -1,0 +1,14 @@
+Name,Tree,Assignments
+CAP-188 c2v3,data/188-c2v3-2.fa_combined.tre,data/188-c2v3-2.fa.alt.tsv
+CAP-188 nef,data/188-nef.fa_combined.tre,data/188-nef.fa.alt.tsv
+CAP-188 v1v2,data/188-v1v2-nohyperMiSeq.fa_combined.tre,data/188-v1v2-nohyperMiSeq.fa.alt.tsv
+CAP-206 p17,data/206-p17.fa_combined.tre,data/206-p17.fa.alt.tsv
+CAP-206 v1v2,data/206-v1v2-nohyperMiSeq.fa_combined.tre,data/206-v1v2-nohyperMiSeq.fa.alt.tsv
+CAP-206 v4v5,data/206-v4v5-nohyperMiSeq.fa_combined.tre,data/206-v4v5-nohyperMiSeq.fa.alt.tsv
+CAP-302 nef,data/302-nef.fa_combined.tre,data/302-nef.fa.alt.tsv
+CAP-302 v4v5,data/302-v4v5-nohyper.fa_combined.tre,data/302-v4v5-nohyper.fa.alt.tsv
+CAP-316 p17,data/316-p17.fa_combined.tre,data/316-p17.fa.alt.tsv
+CAP-316 p17,data/316-p17.fa_combined.tre,data/316-p17.fa.alt.tsv
+CAP-336 c2v3,data/316-c2v3.fa_combined.tre,data/316-c2v3.fa.alt.tsv
+CAP-336 v1v2,data/336-v1v2-nohyperMiSeq.fa_combined.tre,data/336-v1v2-nohyperMiSeq.fa.alt.tsv
+CAP-336 v4v5,data/336-v4v5-nohyperMiSeq.fa_combined.tre,data/336-v4v5-nohyperMiSeq.fa.alt.tsv
