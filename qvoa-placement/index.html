@@ -2,9 +2,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
-
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -42,21 +41,46 @@
 
  <main role="main" class="container">
 
+
+
     <h2 id="render-title"></h2>
-     <div class="row">
-        <div class="col">
-         <table class = "table table-sm" id="assignment-summary">   
+
+
+    <ul class="nav nav-tabs"  role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="tree-tab" data-toggle="tab" href="#tree" role="tab" aria-controls="tree" aria-selected="true">Tree</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="table-tab" data-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="false">QVOA assignment table</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="tree" role="tabpanel" aria-labelledby="tree-tab">
+        
+        <div class="row">
+            <div class="col">
+             <table class = "table table-sm" id="assignment-summary">   
            
-         <table>
+             </table>
+            </div>
         </div>
+
+         <div class="row">
+            <div class="col">
+                 <svg id="tree_display"></svg>
+            </div>
+        </div>
+        
+      </div>
+      <div class="tab-pane fade" id="table" role="tabpanel" aria-labelledby="table-tab">
+         <table class = "table table-sm" id="assignment-by-read">   
+       
+         </table>
+      </div>
     </div>
 
-     <div class="row">
-        <div class="col">
-             <svg id="tree_display"></svg>
-        </div>
-    </div>
-
+ 
  
   
   
@@ -78,17 +102,60 @@
             }
          
             var qvoa_annotation = {};
+            var qvoa_by_read    = {};
+            var all_wks         = {};
         
             annotation.forEach (function (row) {
                 if (!(row.Name in qvoa_annotation)) {
                     qvoa_annotation [row.Name] = {};
                 } 
+                
                 var wpi_assignment = row.Rearrangement.match ("([0-9]+)wpi");
+                var id = row.Name.replace (/_QVOA/g, "");
+                
+                if (!(id in qvoa_by_read)) {
+                    qvoa_by_read[id] = {};
+                }
+                
                 var tag = wpi_assignment ? wpi_assignment [1] : "-1";
+                
+                all_wks [tag] = 1;
+                
+                qvoa_by_read[id][tag] = (qvoa_by_read[id][tag] ? qvoa_by_read[id][tag] : 0) + (+row.Support);
             
                 qvoa_annotation [row.Name][tag] = (qvoa_annotation [row.Name][tag] ? qvoa_annotation [row.Name][tag] : 0) + (+row.Support);
             
             });
+            
+            
+            var by_id_data = [],
+                headers    = _.map(_.keys (all_wks), function (w) {return +w;}).sort(function (a,b) {return a - b;});
+                
+                
+            headers.splice (0, 0, "QVOA ID");
+            
+            _.each (qvoa_by_read, function (v, k) {
+                var array_version = [];
+                
+                _.each (all_wks, function (ignored, wks) {
+                    if (wks in v) {
+                        array_version.push ([+wks, v[wks]]);
+                    } else {
+                        array_version.push ([+wks, 0]);
+                    }
+                });
+                
+                array_version.sort (function (a,b) {return a[0] - b[0];})
+                
+                //by_id_data.push ([k,array_version]);
+                by_id_data.push (_.flatten([k,_.map (array_version, function (a) {return a[1];})]));
+            });
+            
+            by_id_data.sort (function (a,b) {return a[0] - b[0];})
+            by_id_data.splice (0, 0, headers);
+            
+         
+            
         
             var qvoa_data = {};
             var tabulated_by_wpi = {};
@@ -223,8 +290,18 @@
                 return color ((wpi - wpi_values[0])/(wpi_values[1] - wpi_values[0]));
               }
           
-              var number_format = d3.format (".3g");
+ 
+              var number_format  = d3.format (".3g"),
+                  percent_format = d3.format (".4p");
 
+              d3.select ("#assignment-by-read").selectAll ("tbody").remove();
+              var rows = d3.select ("#assignment-by-read").append ("tbody").selectAll ("tr").data (by_id_data);
+              rows.enter ().append ("tr");
+              var columns = rows.selectAll ("td").data (function (d) {return d});
+              columns.enter ().append ("td");
+              columns.text (function (d, i, j) {if (j == 0 && i == 1 && d < 0) return "Ambiguous"; return (i > 0 && j > 0) ? percent_format(d) : d});
+              columns.style ("background-color", function (d, i, j) {return (i > 0 && j == 0) ? color_by_wpi(d) : null});
+ 
               d3.select ("#assignment-summary").selectAll ("tbody").remove();
               var rows = d3.select ("#assignment-summary").append ("tbody").selectAll ("tr").data (two_row_array);
               rows.enter ().append ("tr");
