@@ -2,11 +2,11 @@
 
 <head>
   <meta charset="utf-8">
-   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link href="https:////veg.github.io/phylotree.js/phylotree.css" rel="stylesheet">  
   <script src="//code.jquery.com/jquery.js"></script>
   <script src="//d3js.org/d3.v3.min.js"></script>
@@ -110,7 +110,7 @@
                     qvoa_annotation [row.Name] = {};
                 } 
                 
-                var wpi_assignment = row.Rearrangement.match ("([0-9]+)wpi");
+                var wpi_assignment = row.Rearrangement.match ("([0-9]+)WPI");
                 var id = row.Name.replace (/_QVOA/g, "");
                 
                 if (!(id in qvoa_by_read)) {
@@ -126,7 +126,7 @@
                 qvoa_annotation [row.Name][tag] = (qvoa_annotation [row.Name][tag] ? qvoa_annotation [row.Name][tag] : 0) + (+row.Support);
             
             });
-            
+                        
             
             var by_id_data = [],
                 headers    = _.map(_.keys (all_wks), function (w) {return +w;}).sort(function (a,b) {return a - b;});
@@ -233,7 +233,7 @@
                 }
 
                 if (d3.layout.phylotree.is_leafnode (n)) {
-                 var regular_leaf = n.name.match ("([0-9]+)wpi");
+                 var regular_leaf = n.name.match ("([0-9]+)WPI");
                  n.is_qvoa = regular_leaf ? false : true;
                  
                  
@@ -258,7 +258,10 @@
 
               });
               
-              tree.reroot (early_wpi[1]);
+              if (early_wpi[1].parent.parent) {
+                tree.reroot (early_wpi[1]);
+              }
+              
               function sort_nodes (asc) {
                 tree.traverse_and_compute (function (n) {
                         var d = 1;

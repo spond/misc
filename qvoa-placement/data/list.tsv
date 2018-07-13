@@ -1,14 +1,35 @@
 Name,Tree,Assignments
-CAP-188 c2v3,data/188-c2v3-2.fa_combined.tre,data/188-c2v3-2.fa.alt.tsv
-CAP-188 nef,data/188-nef.fa_combined.tre,data/188-nef.fa.alt.tsv
-CAP-188 v1v2,data/188-v1v2-nohyperMiSeq.fa_combined.tre,data/188-v1v2-nohyperMiSeq.fa.alt.tsv
-CAP-206 p17,data/206-p17.fa_combined.tre,data/206-p17.fa.alt.tsv
-CAP-206 v1v2,data/206-v1v2-nohyperMiSeq.fa_combined.tre,data/206-v1v2-nohyperMiSeq.fa.alt.tsv
-CAP-206 v4v5,data/206-v4v5-nohyperMiSeq.fa_combined.tre,data/206-v4v5-nohyperMiSeq.fa.alt.tsv
-CAP-302 nef,data/302-nef.fa_combined.tre,data/302-nef.fa.alt.tsv
-CAP-302 v4v5,data/302-v4v5-nohyper.fa_combined.tre,data/302-v4v5-nohyper.fa.alt.tsv
-CAP-316 p17,data/316-p17.fa_combined.tre,data/316-p17.fa.alt.tsv
-CAP-316 p17,data/316-p17.fa_combined.tre,data/316-p17.fa.alt.tsv
-CAP-336 c2v3,data/316-c2v3.fa_combined.tre,data/316-c2v3.fa.alt.tsv
-CAP-336 v1v2,data/336-v1v2-nohyperMiSeq.fa_combined.tre,data/336-v1v2-nohyperMiSeq.fa.alt.tsv
-CAP-336 v4v5,data/336-v4v5-nohyperMiSeq.fa_combined.tre,data/336-v4v5-nohyperMiSeq.fa.alt.tsv
+CAP-188 ENV C1C2,data/CAP188_ENV_2_all_hap.fasta_combined.tre,data/CAP188_ENV_2_all_hap.fasta.alt.tsv
+CAP-188 ENV C2C3,data/CAP188_ENV_3_all_hap.fasta_combined.tre,data/CAP188_ENV_3_all_hap.fasta.alt.tsv
+CAP-188 ENV C4C5,data/CAP188_ENV_4_all_hap.fasta_combined.tre,data/CAP188_ENV_4_all_hap.fasta.alt.tsv
+CAP-188 NEF,data/CAP188_NEF_1_all_hap.fasta_combined.tre,data/CAP188_NEF_1_all_hap.fasta.alt.tsv
+CAP-206 ENV C1C2,data/CAP206_ENV_2_all_hap.fasta_combined.tre,data/CAP206_ENV_2_all_hap.fasta.alt.tsv
+CAP-206 ENV C4C5,data/CAP206_ENV_4_all_hap.fasta_combined.tre,data/CAP206_ENV_4_all_hap.fasta.alt.tsv
+CAP-206 GAG,data/CAP206_GAG_1_all_hap.fasta_combined.tre,data/CAP206_GAG_1_all_hap.fasta.alt.tsv
+CAP-217 ENV C1C2,data/CAP217_ENV_2_all_hap.fasta_combined.tre,data/CAP217_ENV_2_all_hap.fasta.alt.tsv
+CAP-217 ENV C2C3,data/CAP217_ENV_3_all_hap.fasta_combined.tre,data/CAP217_ENV_3_all_hap.fasta.alt.tsv
+CAP-217 ENV C4C5,data/CAP217_ENV_4_all_hap.fasta_combined.tre,data/CAP217_ENV_4_all_hap.fasta.alt.tsv
+CAP-257 ENV C1C2,data/CAP257_ENV_2_all_hap.fasta_combined.tre,data/CAP257_ENV_2_all_hap.fasta.alt.tsv
+CAP-257 ENV C2C3,data/CAP257_ENV_3_all_hap.fasta_combined.tre,data/CAP257_ENV_3_all_hap.fasta.alt.tsv
+CAP-257 ENV C4C5,data/CAP257_ENV_4_all_hap.fasta_combined.tre,data/CAP257_ENV_4_all_hap.fasta.alt.tsv
+CAP-257 NEF,data/CAP257_NEF_1_all_hap.fasta_combined.tre,data/CAP257_NEF_1_all_hap.fasta.alt.tsv
+CAP-257 GAG,data/CAP257_GAG_1_all_hap.fasta_combined.tre,data/CAP257_GAG_1_all_hap.fasta.alt.tsv
+CAP-287 ENV C1C2,data/CAP287_ENV_2_all_hap.fasta_combined.tre,data/CAP287_ENV_2_all_hap.fasta.alt.tsv
+CAP-287 ENV C2C3,data/CAP287_ENV_3_all_hap.fasta_combined.tre,data/CAP287_ENV_3_all_hap.fasta.alt.tsv
+CAP-287 ENV C4C5,data/CAP287_ENV_4_all_hap.fasta_combined.tre,data/CAP287_ENV_4_all_hap.fasta.alt.tsv
+CAP-287 GAG,data/CAP287_GAG_1_all_hap.fasta_combined.tre,data/CAP287_GAG_1_all_hap.fasta.alt.tsv
+CAP-288 ENV C1C2,data/CAP288_ENV_2_all_hap.fasta_combined.tre,data/CAP288_ENV_2_all_hap.fasta.alt.tsv
+CAP-288 ENV C2C3,data/CAP288_ENV_3_all_hap.fasta_combined.tre,data/CAP288_ENV_3_all_hap.fasta.alt.tsv
+CAP-288 ENV C4C5,data/CAP288_ENV_4_all_hap.fasta_combined.tre,data/CAP288_ENV_4_all_hap.fasta.alt.tsv
+CAP-288 NEF,data/CAP288_NEF_1_all_hap.fasta_combined.tre,data/CAP288_NEF_1_all_hap.fasta.alt.tsv
+CAP-288 GAG,data/CAP288_GAG_1_all_hap.fasta_combined.tre,data/CAP288_GAG_1_all_hap.fasta.alt.tsv
+CAP-302 ENV C2C3,data/CAP302_ENV_3_all_hap.fasta_combined.tre,data/CAP302_ENV_3_all_hap.fasta.alt.tsv
+CAP-302 ENV C4C5,data/CAP302_ENV_4_all_hap.fasta_combined.tre,data/CAP302_ENV_4_all_hap.fasta.alt.tsv
+CAP-302 NEF,data/CAP302_NEF_1_all_hap.fasta_combined.tre,data/CAP302_NEF_1_all_hap.fasta.alt.tsv
+CAP-316 ENV C2C3,data/CAP316_ENV_3_all_hap.fasta_combined.tre,data/CAP316_ENV_3_all_hap.fasta.alt.tsv
+CAP-316 GAG,data/CAP316_GAG_1_all_hap.fasta_combined.tre,data/CAP316_GAG_1_all_hap.fasta.alt.tsv
+CAP-336 ENV C1C2,data/CAP336_ENV_2_all_hap.fasta_combined.tre,data/CAP336_ENV_2_all_hap.fasta.alt.tsv
+CAP-336 ENV C2C3,data/CAP336_ENV_3_all_hap.fasta_combined.tre,data/CAP336_ENV_3_all_hap.fasta.alt.tsv
+CAP-336 ENV C4C5,data/CAP336_ENV_4_all_hap.fasta_combined.tre,data/CAP336_ENV_4_all_hap.fasta.alt.tsv
+CAP-336 NEF,data/CAP336_NEF_1_all_hap.fasta_combined.tre,data/CAP336_NEF_1_all_hap.fasta.alt.tsv
+CAP-336 GAG,data/CAP336_GAG_1_all_hap.fasta_combined.tre,data/CAP336_GAG_1_all_hap.fasta.alt.tsv
