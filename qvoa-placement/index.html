@@ -2,16 +2,17 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">-->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link href="https://veg.github.io/phylotree.js/phylotree.css" rel="stylesheet">  
+  <link href="https://veg.github.io/phylotree.js/phylotree.css" rel="stylesheet">
   <script src="//code.jquery.com/jquery.js"></script>
   <script src="//d3js.org/d3.v3.min.js"></script>
-  <script src="https://veg.github.io/phylotree.js/phylotree.js"></script>
+  <!-- <script src="https://veg.github.io/phylotree.js/phylotree.js"></script> -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script src = "phylotree.js"></script>
   <style>
     .slice {
         stroke : black;
@@ -53,15 +54,18 @@
       <li class="nav-item">
         <a class="nav-link" id="table-tab" data-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="false">QVOA assignment table</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" id="ref-tree-tab" data-toggle="tab" href="#ref_tree_tab" role="tab" aria-controls="ref_tree_tab" aria-selected="false">Second Tree</a>
+      </li>
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane fade show active" id="tree" role="tabpanel" aria-labelledby="tree-tab">
-        
+
         <div class="row">
             <div class="col">
-             <table class = "table table-sm" id="assignment-summary">   
-           
+             <table class = "table table-sm" id="assignment-summary">
+
              </table>
             </div>
         </div>
@@ -70,20 +74,33 @@
             <div class="col">
                  <svg id="tree_display"></svg>
             </div>
-        </div>
-        
+         </div>
+
+
+
       </div>
       <div class="tab-pane fade" id="table" role="tabpanel" aria-labelledby="table-tab">
-         <table class = "table table-sm" id="assignment-by-read">   
-       
+         <table class = "table table-sm" id="assignment-by-read">
+
          </table>
       </div>
-    </div>
+      <div class="tab-pane fade" id="ref_tree_tab" role="tabpanel" aria-labelledby="ref-tree-tab">
 
- 
- 
-  
-  
+         <div class="row">
+            <div class="col">
+                 <svg id="ref_tree"></svg>
+            </div>
+         </div>
+
+
+
+      </div>
+   </div>
+
+
+
+
+
   </main>
 
   <script>
@@ -91,52 +108,52 @@
 
     var color = d3.scale.linear().domain([0,1/12,2/12,3/12,4/12,5/12,6/12,7/12,8/12,9/12,10/12,11/12,1]).range (["#ff0000","#ff3300","#ff6633","#ff9900","#ffcc00","#ffff00","#99ff00","#33ff00","#00ff99","#00ffcc","#00ccff","#0099ff","#0033ff"].map (function (c) {return d3.rgb (c);})).interpolate(d3.interpolateRgb);
 
-    var height = 900, width = 900;
-        
+    var height = 1200, width = 1200;
+
     function render (name, config_set) {
         d3.select ("#render-title").text (name);
-        
+
         d3.tsv (config_set[0], function (error, annotation) {
            if (error) {
                 throw ("Failed to load file");
             }
-         
+
             var qvoa_annotation = {};
             var qvoa_by_read    = {};
             var all_wks         = {};
-        
+
             annotation.forEach (function (row) {
                 if (!(row.Name in qvoa_annotation)) {
                     qvoa_annotation [row.Name] = {};
-                } 
-                
+                }
+
                 var wpi_assignment = row.Rearrangement.match ("([0-9]+)WPI");
                 var id = row.Name.replace (/_QVOA/g, "");
-                
+
                 if (!(id in qvoa_by_read)) {
                     qvoa_by_read[id] = {};
                 }
-                
+
                 var tag = wpi_assignment ? wpi_assignment [1] : "-1";
-                
+
                 all_wks [tag] = 1;
-                
+
                 qvoa_by_read[id][tag] = (qvoa_by_read[id][tag] ? qvoa_by_read[id][tag] : 0) + (+row.Support);
-            
+
                 qvoa_annotation [row.Name][tag] = (qvoa_annotation [row.Name][tag] ? qvoa_annotation [row.Name][tag] : 0) + (+row.Support);
-            
+
             });
-                        
-            
+
+
             var by_id_data = [],
                 headers    = _.map(_.keys (all_wks), function (w) {return +w;}).sort(function (a,b) {return a - b;});
-                
-                
+
+
             headers.splice (0, 0, "QVOA ID");
-            
+
             _.each (qvoa_by_read, function (v, k) {
                 var array_version = [];
-                
+
                 _.each (all_wks, function (ignored, wks) {
                     if (wks in v) {
                         array_version.push ([+wks, v[wks]]);
@@ -144,22 +161,22 @@
                         array_version.push ([+wks, 0]);
                     }
                 });
-                
+
                 array_version.sort (function (a,b) {return a[0] - b[0];})
-                
+
                 //by_id_data.push ([k,array_version]);
                 by_id_data.push (_.flatten([k,_.map (array_version, function (a) {return a[1];})]));
             });
-            
+
             by_id_data.sort (function (a,b) {return a[0] - b[0];})
             by_id_data.splice (0, 0, headers);
-            
-         
-            
-        
+
+
+
+
             var qvoa_data = {};
             var tabulated_by_wpi = {};
-        
+
             for (var id in qvoa_annotation) {
                 var array_data = [];
                 for (var assignment in qvoa_annotation[id]) {
@@ -175,21 +192,22 @@
                     }
                 });
             }
-        
+
             var tabulated_array = [];
             _.each (tabulated_by_wpi, function (value, key) {
-                tabulated_array.push ([+key, value]);    
+                tabulated_array.push ([+key, value]);
             });
-        
+
             var two_row_array = [["Time"],["Count"]];
-        
+
             _.each (tabulated_array.sort (function (a,b) {return a[0] - b[0];}), function (r) {
                 two_row_array[0].push (r[0]);
                 two_row_array[1].push (r[1]);
-            }); 
-        
+            });
+
 
             d3.text(config_set[1], function(error, newick) {
+
               var tree = d3.layout.phylotree()
                 .svg(d3.select("#tree_display"))
                 .options({
@@ -208,7 +226,7 @@
               })
               .size([height, width])
               .node_circle_size(0)
-              .radial (false);
+              .radial (true);
 
               tree(d3.layout.newick_parser(newick));
 
@@ -216,52 +234,53 @@
 
               var early_wpi = [1e10, null];
 
-              tree.traverse_and_compute (function (n) {
-
-                function update_parent (n, wpi) {
-                    if ("wpi" in n.parent) {
-                        if (wpi >= 0) {
-                            if (wpi != n.parent.wpi) {
-                                n.parent.wpi = -1;
+              var tree_traverser_callback = function (n) {
+                        function update_parent (n, wpi) {
+                            if ("wpi" in n.parent) {
+                                if (wpi >= 0) {
+                                    if (wpi != n.parent.wpi) {
+                                        n.parent.wpi = -1;
+                                    }
+                                } else {
+                                    n.parent.wpi = -1;
+                                }
+                            } else {
+                                n.parent.wpi = wpi >= 0 ? wpi : -1;
                             }
-                        } else {
-                            n.parent.wpi = -1;
                         }
-                    } else {
-                        n.parent.wpi = wpi >= 0 ? wpi : -1;
-                    }
-                }
 
-                if (d3.layout.phylotree.is_leafnode (n)) {
-                 var regular_leaf = n.name.match ("([0-9]+)WPI");
-                 n.is_qvoa = regular_leaf ? false : true;
-                 
-                 
-                 if (regular_leaf) {
-                    n.wpi = + regular_leaf[1];
-                    
-                    if (n.wpi < early_wpi [0]) {
-                        early_wpi [0] = n.wpi;
-                        early_wpi [1] = n;
-                    }
-                    
-                    wpi_values.push (n.wpi);
-                    update_parent (n, n.wpi);
-                 }
-                } else {
-                    if (n.parent) {
-                        update_parent (n, n.wpi);
-                    }
-                }
+                        if (d3.layout.phylotree.is_leafnode (n)) {
+                         var regular_leaf = n.name.match ("([0-9]+)WPI");
+                         n.is_qvoa = regular_leaf ? false : true;
 
+                         if (regular_leaf) {
+                            n.wpi = + regular_leaf[1];
+                            if (n.wpi == 0) {
+                                n.is_qvoa = true;
+                                return;
+                            }
 
+                            if (n.wpi < early_wpi [0]) {
+                                early_wpi [0] = n.wpi;
+                                early_wpi [1] = n;
+                            }
 
-              });
-              
+                            wpi_values.push (n.wpi);
+                            update_parent (n, n.wpi);
+                         }
+                        } else {
+                            if (n.parent) {
+                                update_parent (n, n.wpi);
+                            }
+                        }
+                      };
+
+              tree.traverse_and_compute (tree_traverser_callback);
+
               if (early_wpi[1].parent.parent) {
                 tree.reroot (early_wpi[1]);
               }
-              
+
               function sort_nodes (asc) {
                 tree.traverse_and_compute (function (n) {
                         var d = 1;
@@ -285,15 +304,15 @@
               });*/
 
               wpi_values = d3.extent (wpi_values);
-      
+
               function color_by_wpi (wpi) {
                 if (wpi < 0) {
                     return "#888";
                 }
                 return color ((wpi - wpi_values[0])/(wpi_values[1] - wpi_values[0]));
               }
-          
- 
+
+
               var number_format  = d3.format (".3g"),
                   percent_format = d3.format (".4p");
 
@@ -304,7 +323,7 @@
               columns.enter ().append ("td");
               columns.text (function (d, i, j) {if (j == 0 && i == 1 && d < 0) return "Ambiguous"; return (i > 0 && j > 0) ? percent_format(d) : d});
               columns.style ("background-color", function (d, i, j) {return (i > 0 && j == 0) ? color_by_wpi(d) : null});
- 
+
               d3.select ("#assignment-summary").selectAll ("tbody").remove();
               var rows = d3.select ("#assignment-summary").append ("tbody").selectAll ("tr").data (two_row_array);
               rows.enter ().append ("tr");
@@ -312,8 +331,8 @@
               columns.enter ().append ("td");
               columns.text (function (d, i, j) {if (j == 0 && i == 1 && d < 0) return "Ambiguous"; return (i > 0 && j == 1) ? number_format(d) : d});
               columns.style ("background-color", function (d, i, j) {return (i > 0 && j == 0) ? color_by_wpi(d) : null});
-    
-              tree.style_edges (function (e, n) {
+
+              var edge_styler = function (e, n) {
                 if ("wpi" in n.target) {
                     //console.log (n.target);
                     if (n.target.is_qvoa) {
@@ -330,11 +349,13 @@
                          e.style ("stroke-width", "10px");
                     }*/
                 }
-            
+
                 if (!d3.layout.phylotree.is_leafnode (n.target)) {
                     e.style ("stroke-width", "" + ((+n.target.name)*2 + 1) + "px" );
                 }
-              });
+              };
+
+              tree.style_edges (edge_styler);
 
               tree.style_nodes (function (e, n) {
                 if (n.is_qvoa) {
@@ -344,10 +365,10 @@
                     //var data = [{value : 1, wpi : 30}, {value :2, wpi : 100}]
                     var vis = e.data([qvoa_data[n.name]]).append ("g");
                     if (tree.radial()) {
-                        vis.attr("transform", "rotate (" + n.text_angle + ") translate (-" + existing_r + ",0)")
+                        vis.attr("transform", "rotate (" + n.text_angle + ") translate (" + (n.text_align == "end" ? -existing_r : existing_r) + ",0)")
                     } else {
                         vis.attr("transform", "translate (" + existing_r + ",0)")
-                    
+
                     };
                     var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
                         arcs.append("svg:path")
@@ -358,12 +379,67 @@
                     e.selectAll ("circle").remove();
                 }
               });
-      
+
 
               tree.branch_name (function () {return "";});
 
               tree.layout();
 
+              if (config_set.length > 2) {
+                 d3.text(config_set[2], function(error, newick) {
+                      var ref_tree = d3.layout.phylotree()
+                        .svg(d3.select("#ref_tree"))
+                        .options({
+                        'left-right-spacing': 'fit-to-size',
+                        // fit to given size top-to-bottom
+                        'top-bottom-spacing': 'fit-to-size',
+                        // fit to given size left-to-right
+                        'selectable': false,
+                        // make nodes and branches not selectable
+                        'collapsible': false,
+                        // turn off the menu on internal nodes
+                        'transitions': false,
+                        'annular-limit' : 0.01,
+                        //'draw-size-bubbles' : true
+                        // turn off d3 animations
+                      })
+                      .size([height, width])
+                      .node_circle_size(0)
+                      .radial (true);
+
+                      ref_tree(d3.layout.newick_parser(newick));
+                      ref_tree.branch_name (function () {return ""});
+
+                      ref_tree.traverse_and_compute (tree_traverser_callback);
+                      ref_tree.style_edges (edge_styler);
+
+                        ref_tree.style_nodes (function (e, n) {
+                            if (n.is_qvoa) {
+                                var existing_r = 10;
+
+                                var vis = e.selectAll ("g");
+                                if (vis.empty()) {
+                                    vis = e.append ("g");
+                                    if (tree.radial()) {
+                                        vis.attr("transform", "rotate (" + n.text_angle + ") translate (" + (n.text_align == "end" ? -existing_r : existing_r) + ",0)")
+                                    } else {
+                                    vis.attr("transform", "translate (" + existing_r + ",0)");
+                                  }
+                                }
+                                var circ = vis.selectAll ("circle");
+                                if (circ.empty()) {
+                                    circ = vis.append ("circle");
+                                }
+                                circ.style("fill", "purple").attr ("opacity", 0.5).attr ("r", existing_r).attr ("cx", 0).attr ("cy", 0);
+                             } else {
+                                e.selectAll ("circle").remove();
+                            }
+                          });
+                      ref_tree.layout();
+
+              }
+              );
+            }
             });
        });
     }
@@ -376,8 +452,15 @@
 
         items.classed ("dropdown-item", true).attr ("href", "#").text (function (d) {return d.Name;}).on ("click",
             function (d) {
-                render (d.Name, [d.Assignments,d.Tree]);
+                if (d.RefTree) {
+                    render (d.Name, [d.Assignments,d.Tree,d.RefTree]);
+
+                } else {
+                    render (d.Name, [d.Assignments,d.Tree]);
+                }
             });
+
+        //items.node().click();
     });
 
   </script>
