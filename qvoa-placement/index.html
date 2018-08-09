@@ -7,7 +7,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link href="https://veg.github.io/phylotree.js/phylotree.css" rel="stylesheet">
   <script src="//code.jquery.com/jquery.js"></script>
   <script src="//d3js.org/d3.v3.min.js"></script>
   <!-- <script src="https://veg.github.io/phylotree.js/phylotree.js"></script> -->
@@ -18,6 +17,98 @@
         stroke : black;
         stroke-width : 1px;
     }
+    .tree-selection-brush .extent {
+    fill-opacity: .05;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+    }
+
+    .tree-scale-bar text {
+      font: sans-serif;
+    }
+
+    .tree-scale-bar line,
+    .tree-scale-bar path {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .node circle, .node ellipse, .node rect {
+    fill: steelblue;
+    stroke: black;
+    stroke-width: 0.5px;
+    }
+
+    .internal-node circle, .internal-node ellipse, .internal-node rect{
+    fill: #CCC;
+    stroke: black;
+    stroke-width: 0.5px;
+    }
+
+    .node {
+    font: 10px sans-serif;
+    }
+
+    .node-selected {
+    fill: #f00 !important;
+    }
+
+    .node-collapsed circle, .node-collapsed ellipse, .node-collapsed rect{
+    fill: black !important;
+    }
+
+    .node-tagged {
+    fill: #00f;
+    }
+
+    .branch {
+    fill: none;
+    stroke: #999;
+    stroke-width: 2px;
+    }
+
+    .clade {
+    fill: #1f77b4;
+    stroke: #444;
+    stroke-width: 2px;
+    opacity: 0.5;
+    }
+
+    .branch-selected {
+    stroke: #f00 !important;
+    stroke-width: 3px;
+    }
+
+    .branch-tagged {
+    stroke: #00f;
+    stroke-dasharray: 10,5;
+    stroke-width: 2px;
+    }
+
+    .branch-tracer {
+    stroke: #bbb;
+    stroke-dasharray: 3,4;
+    stroke-width: 1px;
+    }
+
+
+    .branch-multiple {
+    stroke-dasharray: 5, 5, 1, 5;
+    stroke-width: 3px;
+    }
+
+    .branch:hover {
+    stroke-width: 10px;
+    }
+
+    .internal-node circle:hover, .internal-node ellipse:hover, .internal-node rect:hover {
+    fill: black;
+    stroke: #CCC;
+    }
+
+    .tree-widget {
+    }
   </style>
 </head>
 </head>
@@ -26,7 +117,7 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
       <a class="navbar-brand" href="#">QVOA read assignment</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-c7ontrols="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -72,6 +163,7 @@
 
          <div class="row">
             <div class="col">
+                 <button class = 'btn btn-primary' id="export_tree" style = 'display: none'>Save as PNG</button>
                  <svg id="tree_display"></svg>
             </div>
          </div>
@@ -92,6 +184,7 @@
             </div>
          </div>
 
+        <canvas id="hyphy-chart-canvas" width="150" height="150" style = "display:none">
 
 
       </div>
@@ -106,11 +199,173 @@
   <script>
 
 
-    var color = d3.scale.linear().domain([0,1/12,2/12,3/12,4/12,5/12,6/12,7/12,8/12,9/12,10/12,11/12,1]).range (["#ff0000","#ff3300","#ff6633","#ff9900","#ffcc00","#ffff00","#99ff00","#33ff00","#00ff99","#00ffcc","#00ccff","#0099ff","#0033ff"].map (function (c) {return d3.rgb (c);})).interpolate(d3.interpolateRgb);
+    function b64toBlob(b64, onsuccess, onerror) {
+      var img = new Image();
+
+      img.onerror = onerror;
+
+      img.onload = function onload() {
+        var canvas = document.getElementById("hyphy-chart-canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        if (canvas.msToBlob) {
+          var blob = canvas.msToBlob(onsuccess);
+          onsuccess(blob);
+          window.navigator.msSaveBlob(blob, "image.png");
+        } else {
+          canvas.toBlob(onsuccess);
+        }
+      };
+
+      img.src = b64;
+    }
+
+    var save_image = function(type, container) {
+      var prefix = {
+        xmlns: "http://www.w3.org/2000/xmlns/",
+        xlink: "http://www.w3.org/1999/xlink",
+        svg: "http://www.w3.org/2000/svg"
+      };
+
+      function get_styles(doc) {
+        function process_stylesheet(ss) {
+          try {
+            if (ss.cssRules) {
+              for (var i = 0; i < ss.cssRules.length; i++) {
+                var rule = ss.cssRules[i];
+                if (rule.type === 3) {
+                  // Import Rule
+                  process_stylesheet(rule.styleSheet);
+                } else {
+                  // hack for illustrator crashing on descendent selectors
+                  if (rule.selectorText) {
+                    if (rule.selectorText.indexOf(">") === -1) {
+                      styles += "\n" + rule.cssText;
+                    }
+                  }
+                }
+              }
+            }
+          } catch (e) {
+            console.log("Could not process stylesheet : " + ss);
+          }
+        }
+
+        var styles = "",
+          styleSheets = doc.styleSheets;
+
+        if (styleSheets) {
+          for (var i = 0; i < styleSheets.length; i++) {
+            process_stylesheet(styleSheets[i]);
+          }
+        }
+
+        return styles;
+      }
+
+      var convert_svg_to_png = function(image_string) {
+        var image = document.getElementById("hyphy-chart-image");
+
+        image.onload = function() {
+          var canvas = document.getElementById("hyphy-chart-canvas");
+          canvas.width = image.width;
+          canvas.height = image.height;
+          var context = canvas.getContext("2d");
+          context.fillStyle = "#FFFFFF";
+          context.fillRect(0, 0, image.width, image.height);
+          context.drawImage(image, 0, 0);
+          var img = canvas.toDataURL("image/png");
+          var pom = document.createElement("a");
+          pom.setAttribute("download", "image.png");
+          pom.href = canvas.toDataURL("image/png");
+          $("body").append(pom);
+          pom.click();
+          pom.remove();
+        };
+
+        image.src = image_string;
+      };
+
+      var svg = $(container).find("svg")[0];
+      if (!svg) {
+        svg = $(container)[0];
+      }
+
+      var styles = get_styles(window.document);
+
+      svg.setAttribute("version", "1.1");
+
+      var defsEl = document.createElement("defs");
+      svg.insertBefore(defsEl, svg.firstChild);
+
+      var styleEl = document.createElement("style");
+      defsEl.appendChild(styleEl);
+      styleEl.setAttribute("type", "text/css");
+
+      // removing attributes so they aren't doubled up
+      svg.removeAttribute("xmlns");
+      svg.removeAttribute("xlink");
+
+      // These are needed for the svg
+      if (!svg.hasAttributeNS(prefix.xmlns, "xmlns")) {
+        svg.setAttributeNS(prefix.xmlns, "xmlns", prefix.svg);
+      }
+
+      if (!svg.hasAttributeNS(prefix.xmlns, "xmlns:xlink")) {
+        svg.setAttributeNS(prefix.xmlns, "xmlns:xlink", prefix.xlink);
+      }
+
+      var source = new XMLSerializer()
+        .serializeToString(svg)
+        .replace("</style>", "<![CDATA[" + styles + "]]></style>");
+      var rect = svg.getBoundingClientRect();
+      var doctype =
+        '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">';
+      var to_download = [doctype + source];
+      var image_string =
+        "data:image/svg+xml;base66," + encodeURIComponent(to_download);
+
+      if (navigator.msSaveBlob) {
+        // IE10
+        download(image_string, "image.svg", "image/svg+xml");
+      } else if (type == "png") {
+        b64toBlob(
+          image_string,
+          function(blob) {
+            var url = window.URL.createObjectURL(blob);
+            var pom = document.createElement("a");
+            pom.setAttribute("download", "image.png");
+            pom.setAttribute("href", url);
+            $("body").append(pom);
+            pom.click();
+            pom.remove();
+          },
+          function(error) {
+            console.log(error);
+          }
+        );
+      } else {
+        var pom = document.createElement("a");
+        pom.setAttribute("download", "image.svg");
+        pom.setAttribute("href", image_string);
+        $("body").append(pom);
+        pom.click();
+        pom.remove();
+      }
+    };
+
+
+    //var color = d3.scale.linear().domain([0,1/12,2/12,3/12,4/12,5/12,6/12,7/12,8/12,9/12,10/12,11/12,1]).range (["#ff0000","#ff3300","#ff6633","#ff9900","#ffcc00","#ffff00","#99ff00","#33ff00","#00ff99","#00ffcc","#00ccff","#0099ff","#0033ff"].map (function (c) {return d3.rgb (c);})).interpolate(d3.interpolateRgb);
 
     var height = 1200, width = 1200;
 
-    function render (name, config_set) {
+    function render (name, pid, gap, config_set) {
         d3.select ("#render-title").text (name);
 
         d3.tsv (config_set[0], function (error, annotation) {
@@ -295,21 +550,39 @@
              }
              sort_nodes (true);
 
-              /*tree.node_span (function (n) {
-                if (n.is_qvoa) {
-                    //console.log ("QVOA");
-                    return 20;
-                }
-                return 0.01;
-              });*/
-
               wpi_values = d3.extent (wpi_values);
 
               function color_by_wpi (wpi) {
                 if (wpi < 0) {
                     return "#888";
                 }
-                return color ((wpi - wpi_values[0])/(wpi_values[1] - wpi_values[0]));
+                //console.log (wpi_values[0], wpi);
+                if (wpi == wpi_values[0] && pid != "CAP-288") {
+                    return d3.rgb (255,0,0);
+                }
+                var diff = wpi_values[1] - wpi + gap;
+
+                if (diff <= 15) {return d3.rgb (0,0,255); }
+                if (diff <= 34) {return d3.rgb (0,153,255); }
+                if (diff <= 52) {return d3.rgb (0,204,255); }
+                if (diff <= 78) {return d3.rgb (102,255,102); }
+                if (diff <= 104) {return d3.rgb (0,255,0); }
+                if (diff <= 121) {return d3.rgb (235,255,0); }
+                if (diff <= 138) {return d3.rgb (255,255,0); }
+                if (diff <= 156) {return d3.rgb (255,255,102); }
+                if (diff <= 182) {return d3.rgb (255,204,0); }
+                if (diff <= 208) {return d3.rgb (255,153,0); }
+                if (diff <= 222) {return d3.rgb (255,89,0); }
+                if (diff <= 234) {return d3.rgb (255,77,0); }
+                if (diff <= 248) {return d3.rgb (255,64,0); }
+                if (diff <= 263) {return d3.rgb (255,51,0); }
+                if (diff <= 289) {return d3.rgb (184,34,0); }
+                if (diff <= 315) {return d3.rgb (205,23,0); }
+                if (diff <= 341) {return d3.rgb (230,11,0); }
+
+                return "#888";
+
+                //return color ((wpi - wpi_values[0])/(wpi_values[1] - wpi_values[0]));
               }
 
 
@@ -452,16 +725,22 @@
 
         items.classed ("dropdown-item", true).attr ("href", "#").text (function (d) {return d.Name;}).on ("click",
             function (d) {
+                $("#export_tree").on ("click",
+                    function () {
+                        save_image ("png","#tree_display");
+                    });
                 if (d.RefTree) {
-                    render (d.Name, [d.Assignments,d.Tree,d.RefTree]);
-
+                    render (d.Name, d.ID, +d.Gap, [d.Assignments,d.Tree,d.RefTree]);
                 } else {
-                    render (d.Name, [d.Assignments,d.Tree]);
+                    render (d.Name, d.ID, +d.Gap, [d.Assignments,d.Tree]);
                 }
+                $("#export_tree").css ('display', 'block');
             });
 
         //items.node().click();
     });
+
+
 
   </script>
 

@@ -1,35 +1,35 @@
-Name,Tree,Assignments,RefTree
-CAP-188 ENV C1C2,data/CAP188_ENV_2_all_hap.fasta_combined.tre,data/CAP188_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_2_all_hap_rooted.nwk
-CAP-188 ENV C2C3,data/CAP188_ENV_3_all_hap.fasta_combined.tre,data/CAP188_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_3_all_hap_rooted.nwk
-CAP-188 ENV C4C5,data/CAP188_ENV_4_all_hap.fasta_combined.tre,data/CAP188_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_4_all_hap_rooted.nwk
-CAP-188 NEF,data/CAP188_NEF_1_all_hap.fasta_combined.tre,data/CAP188_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_4_all_hap_rooted.nwk
-CAP-206 ENV C1C2,data/CAP206_ENV_2_all_hap.fasta_combined.tre,data/CAP206_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP206_ENV_2_all_hap_rooted.nwk
-CAP-206 ENV C4C5,data/CAP206_ENV_4_all_hap.fasta_combined.tre,data/CAP206_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP206_ENV_4_all_hap_rooted.nwk
-CAP-206 GAG,data/CAP206_GAG_1_all_hap.fasta_combined.tre,data/CAP206_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP206_GAG_1_all_hap_rooted.nwk
-CAP-217 ENV C1C2,data/CAP217_ENV_2_all_hap.fasta_combined.tre,data/CAP217_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP217_ENV_2_all_hap_rooted.nwk
-CAP-217 ENV C2C3,data/CAP217_ENV_3_all_hap.fasta_combined.tre,data/CAP217_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP217_ENV_3_all_hap_rooted.nwk
-CAP-217 ENV C4C5,data/CAP217_ENV_4_all_hap.fasta_combined.tre,data/CAP217_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP217_ENV_4_all_hap_rooted.nwk
-CAP-257 ENV C1C2,data/CAP257_ENV_2_all_hap.fasta_combined.tre,data/CAP257_ENV_2_all_hap.fasta.alt.tsv
-CAP-257 ENV C2C3,data/CAP257_ENV_3_all_hap.fasta_combined.tre,data/CAP257_ENV_3_all_hap.fasta.alt.tsv
-CAP-257 ENV C4C5,data/CAP257_ENV_4_all_hap.fasta_combined.tre,data/CAP257_ENV_4_all_hap.fasta.alt.tsv
-CAP-257 NEF,data/CAP257_NEF_1_all_hap.fasta_combined.tre,data/CAP257_NEF_1_all_hap.fasta.alt.tsv
-CAP-257 GAG,data/CAP257_GAG_1_all_hap.fasta_combined.tre,data/CAP257_GAG_1_all_hap.fasta.alt.tsv
-CAP-287 ENV C1C2,data/CAP287_ENV_2_all_hap.fasta_combined.tre,data/CAP287_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_2_all_hap_rooted.nwk
-CAP-287 ENV C2C3,data/CAP287_ENV_3_all_hap.fasta_combined.tre,data/CAP287_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_3_all_hap_rooted.nwk
-CAP-287 ENV C4C5,data/CAP287_ENV_4_all_hap.fasta_combined.tre,data/CAP287_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_4_all_hap_rooted.nwk
-CAP-287 GAG,data/CAP287_GAG_1_all_hap.fasta_combined.tre,data/CAP287_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP287_GAG_1_all_hap_rooted.nwk
-CAP-288 ENV C1C2,data/CAP288_ENV_2_all_hap.fasta_combined.tre,data/CAP288_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP288_ENV_2_all_hap_rooted.nwk
-CAP-288 ENV C2C3,data/CAP288_ENV_3_all_hap.fasta_combined.tre,data/CAP288_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP288_ENV_3_all_hap_rooted.nwk
-CAP-288 ENV C4C5,data/CAP288_ENV_4_all_hap.fasta_combined.tre,data/CAP288_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP288_ENV_4_all_hap_rooted.nwk
-CAP-288 NEF,data/CAP288_NEF_1_all_hap.fasta_combined.tre,data/CAP288_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP288_NEF_1_all_hap_rooted.nwk
-CAP-288 GAG,data/CAP288_GAG_1_all_hap.fasta_combined.tre,data/CAP288_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP288_GAG_1_all_hap_rooted.nwk
-CAP-302 ENV C2C3,data/CAP302_ENV_3_all_hap.fasta_combined.tre,data/CAP302_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP302_ENV_3_all_hap_rooted.nwk
-CAP-302 ENV C4C5,data/CAP302_ENV_4_all_hap.fasta_combined.tre,data/CAP302_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP302_ENV_4_all_hap_rooted.nwk
-CAP-302 NEF,data/CAP302_NEF_1_all_hap.fasta_combined.tre,data/CAP302_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP302_NEF_1_all_hap_rooted.nwk
-CAP-316 ENV C2C3,data/CAP316_ENV_3_all_hap.fasta_combined.tre,data/CAP316_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP316_ENV_3_all_hap_rooted.nwk
-CAP-316 GAG,data/CAP316_GAG_1_all_hap.fasta_combined.tre,data/CAP316_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP316_GAG_1_all_hap_rooted.nwk
-CAP-336 ENV C1C2,data/CAP336_ENV_2_all_hap.fasta_combined.tre,data/CAP336_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP336_ENV_2_all_hap_rooted.nwk
-CAP-336 ENV C2C3,data/CAP336_ENV_3_all_hap.fasta_combined.tre,data/CAP336_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP336_ENV_3_all_hap_rooted.nwk
-CAP-336 ENV C4C5,data/CAP336_ENV_4_all_hap.fasta_combined.tre,data/CAP336_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP336_ENV_4_all_hap_rooted.nwk
-CAP-336 NEF,data/CAP336_NEF_1_all_hap.fasta_combined.tre,data/CAP336_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP336_NEF_1_all_hap_rooted.nwk
-CAP-336 GAG,data/CAP336_GAG_1_all_hap.fasta_combined.tre,data/CAP336_GAG_1_all_hap.fasta.alt.tsv,,data/newick/CAP336_GAG_1_all_hap_rooted.nwk
+Name,ID,Gap,Tree,Assignments,RefTree
+CAP-188 ENV C1C2,CAP-188,10,data/CAP188_ENV_2_all_hap.fasta_combined.tre,data/CAP188_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_2_all_hap_rooted.nwk
+CAP-188 ENV C2C3,CAP-188,10,data/CAP188_ENV_3_all_hap.fasta_combined.tre,data/CAP188_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_3_all_hap_rooted.nwk
+CAP-188 ENV C4C5,CAP-188,10,data/CAP188_ENV_4_all_hap.fasta_combined.tre,data/CAP188_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_4_all_hap_rooted.nwk
+CAP-188 NEF,CAP-188,10,data/CAP188_NEF_1_all_hap.fasta_combined.tre,data/CAP188_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP188_ENV_4_all_hap_rooted.nwk
+CAP-206 ENV C1C2,CAP-206,1,data/CAP206_ENV_2_all_hap.fasta_combined.tre,data/CAP206_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP206_ENV_2_all_hap_rooted.nwk
+CAP-206 ENV C4C5,CAP-206,1,data/CAP206_ENV_4_all_hap.fasta_combined.tre,data/CAP206_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP206_ENV_4_all_hap_rooted.nwk
+CAP-206 GAG,CAP-206,1,data/CAP206_GAG_1_all_hap.fasta_combined.tre,data/CAP206_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP206_GAG_1_all_hap_rooted.nwk
+CAP-217 ENV C1C2,CAP-217,2,data/CAP217_ENV_2_all_hap.fasta_combined.tre,data/CAP217_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP217_ENV_2_all_hap_rooted.nwk
+CAP-217 ENV C2C3,CAP-217,2,data/CAP217_ENV_3_all_hap.fasta_combined.tre,data/CAP217_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP217_ENV_3_all_hap_rooted.nwk
+CAP-217 ENV C4C5,CAP-217,2,data/CAP217_ENV_4_all_hap.fasta_combined.tre,data/CAP217_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP217_ENV_4_all_hap_rooted.nwk
+CAP-257 ENV C1C2,CAP-257,9,data/CAP257_ENV_2_all_hap.fasta_combined.tre,data/CAP257_ENV_2_all_hap.fasta.alt.tsv
+CAP-257 ENV C2C3,CAP-257,9,data/CAP257_ENV_3_all_hap.fasta_combined.tre,data/CAP257_ENV_3_all_hap.fasta.alt.tsv
+CAP-257 ENV C4C5,CAP-257,9,data/CAP257_ENV_4_all_hap.fasta_combined.tre,data/CAP257_ENV_4_all_hap.fasta.alt.tsv
+CAP-257 NEF,CAP-257,9,data/CAP257_NEF_1_all_hap.fasta_combined.tre,data/CAP257_NEF_1_all_hap.fasta.alt.tsv
+CAP-257 GAG,CAP-257,9,data/CAP257_GAG_1_all_hap.fasta_combined.tre,data/CAP257_GAG_1_all_hap.fasta.alt.tsv
+CAP-287 ENV C1C2,CAP-287,5,data/CAP287_ENV_2_all_hap.fasta_combined.tre,data/CAP287_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_2_all_hap_rooted.nwk
+CAP-287 ENV C2C3,CAP-287,5,data/CAP287_ENV_3_all_hap.fasta_combined.tre,data/CAP287_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_3_all_hap_rooted.nwk
+CAP-287 ENV C4C5,CAP-287,5,data/CAP287_ENV_4_all_hap.fasta_combined.tre,data/CAP287_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_4_all_hap_rooted.nwk
+CAP-287 GAG,CAP-287,5,data/CAP287_GAG_1_all_hap.fasta_combined.tre,data/CAP287_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP287_GAG_1_all_hap_rooted.nwk
+CAP-288 ENV C1C2,CAP-288,26,data/CAP288_ENV_2_all_hap.fasta_combined.tre,data/CAP288_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP288_ENV_2_all_hap_rooted.nwk
+CAP-288 ENV C2C3,CAP-288,26,data/CAP288_ENV_3_all_hap.fasta_combined.tre,data/CAP288_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP288_ENV_3_all_hap_rooted.nwk
+CAP-288 ENV C4C5,CAP-288,26,data/CAP288_ENV_4_all_hap.fasta_combined.tre,data/CAP288_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP288_ENV_4_all_hap_rooted.nwk
+CAP-288 NEF,CAP-288,26,data/CAP288_NEF_1_all_hap.fasta_combined.tre,data/CAP288_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP288_NEF_1_all_hap_rooted.nwk
+CAP-288 GAG,CAP-288,26,data/CAP288_GAG_1_all_hap.fasta_combined.tre,data/CAP288_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP288_GAG_1_all_hap_rooted.nwk
+CAP-302 ENV C2C3,CAP-302,3,data/CAP302_ENV_3_all_hap.fasta_combined.tre,data/CAP302_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP302_ENV_3_all_hap_rooted.nwk
+CAP-302 ENV C4C5,CAP-302,3,data/CAP302_ENV_4_all_hap.fasta_combined.tre,data/CAP302_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP302_ENV_4_all_hap_rooted.nwk
+CAP-302 NEF,CAP-302,3,data/CAP302_NEF_1_all_hap.fasta_combined.tre,data/CAP302_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP302_NEF_1_all_hap_rooted.nwk
+CAP-316 ENV C2C3,CAP-316,10,data/CAP316_ENV_3_all_hap.fasta_combined.tre,data/CAP316_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP316_ENV_3_all_hap_rooted.nwk
+CAP-316 GAG,CAP-316,10,data/CAP316_GAG_1_all_hap.fasta_combined.tre,data/CAP316_GAG_1_all_hap.fasta.alt.tsv,data/newick/CAP316_GAG_1_all_hap_rooted.nwk
+CAP-336 ENV C1C2,CAP-336,4,data/CAP336_ENV_2_all_hap.fasta_combined.tre,data/CAP336_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP336_ENV_2_all_hap_rooted.nwk
+CAP-336 ENV C2C3,CAP-336,4,data/CAP336_ENV_3_all_hap.fasta_combined.tre,data/CAP336_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP336_ENV_3_all_hap_rooted.nwk
+CAP-336 ENV C4C5,CAP-336,4,data/CAP336_ENV_4_all_hap.fasta_combined.tre,data/CAP336_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP336_ENV_4_all_hap_rooted.nwk
+CAP-336 NEF,CAP-336,4,data/CAP336_NEF_1_all_hap.fasta_combined.tre,data/CAP336_NEF_1_all_hap.fasta.alt.tsv,data/newick/CAP336_NEF_1_all_hap_rooted.nwk
+CAP-336 GAG,CAP-336,4,data/CAP336_GAG_1_all_hap.fasta_combined.tre,data/CAP336_GAG_1_all_hap.fasta.alt.tsv,,data/newick/CAP336_GAG_1_all_hap_rooted.nwk
