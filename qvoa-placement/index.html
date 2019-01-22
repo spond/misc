@@ -506,6 +506,9 @@
 
                         if (d3.layout.phylotree.is_leafnode (n)) {
                          var regular_leaf = n.name.match ("([0-9]+)WPI");
+                         if (!regular_leaf) {
+                             regular_leaf = n.name.match ("WPI([0-9]+)");
+                         }
                          n.is_qvoa = regular_leaf ? false : true;
 
                          if (regular_leaf) {
@@ -531,6 +534,7 @@
                       };
 
               tree.traverse_and_compute (tree_traverser_callback);
+              
 
               if (early_wpi[1].parent.parent) {
                 tree.reroot (early_wpi[1]);

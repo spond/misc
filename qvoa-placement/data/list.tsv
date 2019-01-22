@@ -14,6 +14,11 @@ CAP-257 ENV C2C3,CAP-257,9,data/CAP257_ENV_3_all_hap.fasta_combined.tre,data/CAP
 CAP-257 ENV C4C5,CAP-257,9,data/CAP257_ENV_4_all_hap.fasta_combined.tre,data/CAP257_ENV_4_all_hap.fasta.alt.tsv
 CAP-257 NEF,CAP-257,9,data/CAP257_NEF_1_all_hap.fasta_combined.tre,data/CAP257_NEF_1_all_hap.fasta.alt.tsv
 CAP-257 GAG,CAP-257,9,data/CAP257_GAG_1_all_hap.fasta_combined.tre,data/CAP257_GAG_1_all_hap.fasta.alt.tsv
+CAP-286 ENV C1C2,CAP-286,0,data/CAP286_ENV_C1C2_all_hap.fasta_combined.tre,data/CAP286_ENV_C1C2_all_hap.fasta.alt.tsv
+CAP-286 ENV C2C3,CAP-286,0,data/CAP286_ENV_C2C3_all_hap.fasta_combined.tre,data/CAP286_ENV_C2C3_all_hap.fasta.alt.tsv
+CAP-286 ENV C4C5,CAP-286,0,data/CAP286_ENV_C4C5_all_hap.fasta_combined.tre,data/CAP286_ENV_C4C5_all_hap.fasta.alt.tsv
+CAP-286 NEF,CAP-286,0,data/CAP286_NEF_1_all_hap.fasta_combined.tre,data/CAP286_NEF_1_all_hap.fasta.alt.tsv
+CAP-286 GAG,CAP-286,0,data/CAP286_GAG_P17_all_hap.fasta_combined.tre,data/CAP286_GAG_P17_all_hap.fasta.alt.tsv
 CAP-287 ENV C1C2,CAP-287,5,data/CAP287_ENV_2_all_hap.fasta_combined.tre,data/CAP287_ENV_2_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_2_all_hap_rooted.nwk
 CAP-287 ENV C2C3,CAP-287,5,data/CAP287_ENV_3_all_hap.fasta_combined.tre,data/CAP287_ENV_3_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_3_all_hap_rooted.nwk
 CAP-287 ENV C4C5,CAP-287,5,data/CAP287_ENV_4_all_hap.fasta_combined.tre,data/CAP287_ENV_4_all_hap.fasta.alt.tsv,data/newick/CAP287_ENV_4_all_hap_rooted.nwk
